@@ -1,39 +1,33 @@
-# Portfolio Website
+# David's Portfolio Website
 
-A clean and modern portfolio website built with HTML and CSS.
+A personal portfolio website showcasing my projects, skills, and contact information. Built with clean HTML and CSS for a modern, responsive design.
 
-## Setup Instructions
+## About This Website
 
-1. **Create a GitHub repository:**
-   - Go to GitHub and create a new repository named `yourusername.github.io`
-   - Make it public
+This portfolio features:
 
-2. **Push your code:**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git branch -M main
-   git remote add origin https://github.com/yourusername/yourusername.github.io.git
-   git push -u origin main
-   ```
+- **Hero Section** - Introduction and title
+- **About Me** - Brief professional summary
+- **Projects** - Showcase of my work
+- **Skills** - Technical abilities
+- **Contact** - Ways to reach me
 
-3. **Enable GitHub Pages:**
-   - Go to your repository settings
-   - Navigate to "Pages" section
-   - Select "main" branch as source
-   - Your site will be live at `https://yourusername.github.io`
+## Technologies Used
 
-## Customization
+- HTML5
+- CSS3
+- Responsive Design
+- GitHub Pages Hosting
 
-Edit `index.html` to update:
-- Your name and title
-- About section
-- Projects (add links to your GitHub repos)
-- Skills
-- Contact information
+## Live Site
 
-Edit `style.css` to change colors and styling.
+Visit the live website at: `https://bunhoutnub.github.io`
+
+## Contact
+
+- Email: nubbunhout@gmail.com
+- GitHub: [@bunhoutnub](https://github.com/bunhoutnub)
+- LinkedIn: [Bunhout Nub](https://www.linkedin.com/in/bunhout-nub-7741b027a/)
 
 ## License
 
