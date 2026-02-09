@@ -1,6 +1,3 @@
-// Always start at top
-window.scrollTo(0, 0);
-
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
@@ -43,6 +40,9 @@ document.querySelectorAll("section").forEach((section) => {
   section.classList.add("fade-out");
   observer.observe(section);
 });
+
+// Always start at top (after animations are set up)
+window.scrollTo(0, 0);
 
 // Dark mode toggle
 const toggle = document.getElementById('themeToggle');
