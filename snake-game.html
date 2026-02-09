@@ -40,6 +40,22 @@
             margin-top: 20px;
             display: none;
         }
+        #restartBtn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-family: Courier, monospace;
+            font-size: 16px;
+            cursor: pointer;
+            display: none;
+        }
+        #restartBtn:hover {
+            background: #2ecc71;
+        }
         .controls {
             color: white;
             margin-top: 20px;
@@ -67,6 +83,7 @@
         <div id="score">Score: 0</div>
         <canvas id="gameCanvas" width="600" height="600"></canvas>
         <div id="gameOver">GAME OVER!</div>
+        <button id="restartBtn">Play Again</button>
         <div class="controls">Use Arrow Keys to Control</div>
         <a href="index.html" class="back-btn">← Back to Portfolio</a>
     </div>
@@ -76,6 +93,7 @@
         const ctx = canvas.getContext('2d');
         const scoreElement = document.getElementById('score');
         const gameOverElement = document.getElementById('gameOver');
+        const restartBtn = document.getElementById('restartBtn');
 
         const GRID_SIZE = 20;
         const CANVAS_SIZE = 600;
@@ -144,6 +162,7 @@
             if (checkCollision()) {
                 gameRunning = false;
                 gameOverElement.style.display = 'block';
+                restartBtn.style.display = 'inline-block';
                 return;
             }
 
@@ -155,11 +174,6 @@
 
         document.addEventListener('keydown', (e) => {
             if (!gameRunning) return;
-            
-            // Prevent page scrolling with arrow keys
-            if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-                e.preventDefault();
-            }
             
             switch(e.key) {
                 case 'ArrowUp':
@@ -176,6 +190,21 @@
                     break;
             }
         });
+
+        function restartGame() {
+            snake = [{x: 300, y: 300}, {x: 280, y: 300}, {x: 260, y: 300}];
+            dx = GRID_SIZE;
+            dy = 0;
+            score = 0;
+            gameRunning = true;
+            scoreElement.textContent = 'Score: 0';
+            gameOverElement.style.display = 'none';
+            restartBtn.style.display = 'none';
+            randomFood();
+            gameLoop();
+        }
+
+        restartBtn.addEventListener('click', restartGame);
 
         randomFood();
         gameLoop();
