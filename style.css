@@ -53,8 +53,8 @@ nav .container {
 .theme-switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 30px;
+    width: 80px;
+    height: 34px;
 }
 
 .theme-switch input {
@@ -72,27 +72,50 @@ nav .container {
     bottom: 0;
     background-color: #ccc;
     transition: 0.4s;
-    border-radius: 30px;
+    border-radius: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #666;
+}
+
+.slider:after {
+    content: "Light";
+    position: absolute;
+    left: 6px;
+    font-size: 10px;
+    color: #666;
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 22px;
-    width: 22px;
+    height: 26px;
+    width: 26px;
     left: 4px;
     bottom: 4px;
     background-color: white;
     transition: 0.4s;
     border-radius: 50%;
+    z-index: 2;
 }
 
 input:checked + .slider {
     background-color: #667eea;
 }
 
+input:checked + .slider:after {
+    content: "Dark";
+    left: auto;
+    right: 8px;
+    color: white;
+}
+
 input:checked + .slider:before {
-    transform: translateX(30px);
+    transform: translateX(46px);
 }
 
 nav h1 {
