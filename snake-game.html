@@ -75,21 +75,6 @@
         .back-btn:hover {
             background: #f0f0f0;
         }
-        .download-btn {
-            margin-top: 10px;
-            margin-left: 10px;
-            padding: 10px 20px;
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            font-family: Courier, monospace;
-            cursor: pointer;
-        }
-        .download-btn:hover {
-            background: #2980b9;
-        }
     </style>
 </head>
 <body>
@@ -101,7 +86,6 @@
         <button id="restartBtn">Play Again</button>
         <div class="controls">Use Arrow Keys to Control</div>
         <a href="index.html" class="back-btn">← Back to homepage</a>
-        <button class="download-btn" onclick="downloadGame()">Download Code</button>
     </div>
 
     <script>
@@ -225,17 +209,6 @@
         }
 
         restartBtn.addEventListener('click', restartGame);
-
-        function downloadGame() {
-            const htmlContent = document.documentElement.outerHTML;
-            const blob = new Blob([htmlContent], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'snake-game.html';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
 
         randomFood();
         gameLoop();
