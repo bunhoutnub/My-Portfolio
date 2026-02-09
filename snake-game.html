@@ -13,8 +13,8 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: Arial, sans-serif;
+            background: #2c3e50;
+            font-family: Courier, monospace;
         }
         .game-container {
             text-align: center;
@@ -26,16 +26,17 @@
         #score {
             color: white;
             font-size: 24px;
+            font-family: Courier, monospace;
             margin-bottom: 20px;
         }
         canvas {
-            border: 3px solid white;
             background-color: grey;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: block;
         }
         #gameOver {
             color: white;
-            font-size: 32px;
+            font-size: 24px;
+            font-family: Courier, monospace;
             margin-top: 20px;
             display: none;
         }
@@ -48,11 +49,12 @@
             margin-top: 20px;
             padding: 10px 20px;
             background: white;
-            color: #667eea;
+            color: #2c3e50;
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
             display: inline-block;
+            font-family: Courier, monospace;
         }
         .back-btn:hover {
             background: #f0f0f0;
@@ -91,8 +93,8 @@
         }
 
         function drawSnake() {
-            snake.forEach((segment, index) => {
-                ctx.fillStyle = index === 0 ? '#2c3e50' : 'black';
+            snake.forEach((segment) => {
+                ctx.fillStyle = 'black';
                 ctx.fillRect(segment.x, segment.y, GRID_SIZE, GRID_SIZE);
             });
         }
