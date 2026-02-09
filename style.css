@@ -53,7 +53,7 @@ nav .container {
 .theme-switch {
     position: relative;
     display: inline-block;
-    width: 80px;
+    width: 90px;
     height: 34px;
 }
 
@@ -73,21 +73,18 @@ nav .container {
     background-color: #ccc;
     transition: 0.4s;
     border-radius: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 8px;
-    font-size: 11px;
-    font-weight: bold;
-    color: #666;
 }
 
 .slider:after {
     content: "Light";
     position: absolute;
-    left: 6px;
-    font-size: 10px;
-    color: #666;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    font-weight: bold;
+    color: #555;
+    transition: 0.4s;
 }
 
 .slider:before {
@@ -100,7 +97,7 @@ nav .container {
     background-color: white;
     transition: 0.4s;
     border-radius: 50%;
-    z-index: 2;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 input:checked + .slider {
@@ -109,13 +106,13 @@ input:checked + .slider {
 
 input:checked + .slider:after {
     content: "Dark";
-    left: auto;
-    right: 8px;
+    left: 10px;
+    right: auto;
     color: white;
 }
 
 input:checked + .slider:before {
-    transform: translateX(46px);
+    transform: translateX(56px);
 }
 
 nav h1 {
