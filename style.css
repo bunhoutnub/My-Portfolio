@@ -227,6 +227,35 @@ h2 {
     text-align: center;
 }
 
+#resume {
+    text-align: center;
+}
+
+#resume p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.resume-btn {
+    display: inline-block;
+    background: #667eea;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.resume-btn:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+}
+
+#contact {
+    text-align: center;
+}
+
 #contact p {
     font-size: 1.1rem;
     margin: 0.5rem 0;
