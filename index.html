@@ -16,6 +16,7 @@
           <li><a href="#skills">Skills</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
+        <button class="theme-toggle" id="themeToggle">🌙 Dark</button>
       </div>
     </nav>
 
@@ -147,6 +148,22 @@
       document.querySelectorAll("section").forEach((section) => {
         section.classList.add("fade-out");
         observer.observe(section);
+      });
+
+      // Dark mode toggle
+      const toggle = document.getElementById('themeToggle');
+      const savedTheme = localStorage.getItem('theme');
+      
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        toggle.textContent = '☀️ Light';
+      }
+      
+      toggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        toggle.textContent = isDark ? '☀️ Light' : '🌙 Dark';
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
       });
     </script>
   </body>
