@@ -16,7 +16,10 @@
           <li><a href="#skills">Skills</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
-        <button class="theme-toggle" id="themeToggle">🌙 Dark</button>
+        <label class="theme-switch">
+          <input type="checkbox" id="themeToggle">
+          <span class="slider"></span>
+        </label>
       </div>
     </nav>
 
@@ -156,13 +159,12 @@
       
       if (savedTheme === 'dark') {
         document.body.classList.add('dark-mode');
-        toggle.textContent = '☀️ Light';
+        toggle.checked = true;
       }
       
-      toggle.addEventListener('click', () => {
+      toggle.addEventListener('change', () => {
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
-        toggle.textContent = isDark ? '☀️ Light' : '🌙 Dark';
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
       });
     </script>
