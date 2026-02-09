@@ -12,16 +12,31 @@ document.getElementById("city").addEventListener("keypress", function(event) {
 let savedCities = JSON.parse(localStorage.getItem("savedCities")) || [];
 let currentCity = "";
 
-async function displaySavedCities() {
+function displaySavedCities() {
   const citiesList = document.getElementById("citiesList");
   if (savedCities.length === 0) {
     citiesList.innerHTML = '<p style="color: #888; font-size: 0.9em;">No saved cities yet</p>';
     return;
   }
   
-  // Fetch weather for all saved cities
+  // Display cities without fetching weather (faster loading)
+  citiesList.innerHTML = savedCities.map(city => `
+    <div class="city-tag" onclick="loadCity('${city}')">
+      <span>${city}</span>
+      <span class="remove" onclick="event.stopPropagation(); removeCity('${city}')">×</span>
+    </div>
+  `).join('');
+  
+  // Fetch weather for saved cities in background (non-blocking)
+  updateSavedCitiesWeather();
+}
+
+async function updateSavedCitiesWeather() {
   const apiKey = "841db7af533f08223c97eabe15252050";
-  const cityTags = await Promise.all(savedCities.map(async (city) => {
+  const citiesList = document.getElementById("citiesList");
+  
+  for (let i = 0; i < savedCities.length; i++) {
+    const city = savedCities[i];
     try {
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
       const response = await fetch(url);
@@ -29,24 +44,15 @@ async function displaySavedCities() {
       
       if (data.cod === 200) {
         const fahrenheit = Math.ceil((data.main.temp * 9) / 5 + 32);
-        return `
-          <div class="city-tag" onclick="loadCity('${city}')">
-            <span>${city} ${fahrenheit}°F</span>
-            <span class="remove" onclick="event.stopPropagation(); removeCity('${city}')">×</span>
-          </div>
-        `;
+        const cityTags = citiesList.querySelectorAll('.city-tag');
+        if (cityTags[i]) {
+          cityTags[i].querySelector('span').textContent = `${city} ${fahrenheit}°F`;
+        }
       }
     } catch (error) {
-      return `
-        <div class="city-tag" onclick="loadCity('${city}')">
-          <span>${city}</span>
-          <span class="remove" onclick="event.stopPropagation(); removeCity('${city}')">×</span>
-        </div>
-      `;
+      // Keep city name without temperature if fetch fails
     }
-  }));
-  
-  citiesList.innerHTML = cityTags.join('');
+  }
 }
 
 function saveCurrentCity() {
