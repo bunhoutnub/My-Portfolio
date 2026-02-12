@@ -76,15 +76,6 @@ toggle.addEventListener("change", () => {
   localStorage.setItem("theme", isDark ? "dark" : "light");
 });
 
-// Add parallax effect to hero section
-window.addEventListener("scroll", () => {
-  const scrolled = window.pageYOffset;
-  const hero = document.querySelector("#hero");
-  if (hero) {
-    hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-  }
-});
-
 // Add loading animation for project cards
 document.addEventListener("DOMContentLoaded", () => {
   const projectCards = document.querySelectorAll(".project-card");
@@ -109,3 +100,55 @@ slideStyle.textContent = `
   }
 `;
 document.head.appendChild(slideStyle);
+
+// Add floating particles effect
+function createParticle() {
+  const particle = document.createElement("div");
+  particle.style.cssText = `
+    position: fixed;
+    pointer-events: none;
+    opacity: 0.3;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    z-index: 1;
+    animation: float-particle 10s infinite linear;
+  `;
+
+  const size = Math.random() * 4 + 2;
+  particle.style.width = size + "px";
+  particle.style.height = size + "px";
+  particle.style.left = Math.random() * window.innerWidth + "px";
+  particle.style.top = window.innerHeight + "px";
+
+  document.body.appendChild(particle);
+
+  const duration = Math.random() * 10000 + 10000;
+  const horizontalMovement = (Math.random() - 0.5) * 200;
+
+  particle.animate(
+    [
+      { transform: "translateY(0) translateX(0)", opacity: 0.3 },
+      {
+        transform: `translateY(-${window.innerHeight + 100}px) translateX(${horizontalMovement}px)`,
+        opacity: 0,
+      },
+    ],
+    {
+      duration: duration,
+      easing: "linear",
+    },
+  ).onfinish = () => particle.remove();
+}
+
+// Create particles periodically
+setInterval(createParticle, 800);
+
+// Add floating particle animation
+const particleStyle = document.createElement("style");
+particleStyle.textContent = `
+  @keyframes float-particle {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-100vh) rotate(360deg); }
+  }
+`;
+document.head.appendChild(particleStyle);
