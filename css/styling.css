@@ -322,7 +322,6 @@ nav {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--glass-border);
-  color: white;
   padding: 1rem 0;
   position: sticky;
   top: 0;
@@ -331,10 +330,30 @@ nav {
   transition: all 0.3s ease;
 }
 
+nav h1 {
+  font-size: 1.5rem;
+  color: #1a202c;
+  font-weight: 700;
+}
+
+nav a {
+  color: #1a202c;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 0.5rem 0;
+  font-weight: 600;
+}
+
 body.dark-mode nav {
   background: rgba(15, 15, 15, 0.8);
   border-bottom: 1px solid rgba(102, 126, 234, 0.3);
   box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+}
+
+body.dark-mode nav h1,
+body.dark-mode nav a {
+  color: white;
 }
 
 nav .container {
