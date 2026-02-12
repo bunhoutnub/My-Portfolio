@@ -28,7 +28,3 @@ Visit the live website at: `https://bunhoutnub.github.io`
 - Email: nubbunhout@gmail.com
 - GitHub: [@bunhoutnub](https://github.com/bunhoutnub)
 - LinkedIn: [Bunhout Nub](https://www.linkedin.com/in/bunhout-nub-7741b027a/)
-
-## License
-
-MIT
