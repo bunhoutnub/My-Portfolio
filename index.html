@@ -32,14 +32,46 @@
 
     <section id="hero">
       <div class="container">
-        <h2>Hi, I'm <span>David!</span></h2>
-        <p>
-          Passionate Computer Science Student | Full-Stack Developer | Problem
-          Solver
-        </p>
-        <div class="hero-buttons">
-          <a href="#projects" class="hero-btn primary">View My Work</a>
-          <a href="#contact" class="hero-btn secondary">Get In Touch</a>
+        <div class="hero-content">
+          <div class="hero-text">
+            <h2>Hi, I'm <span>David!</span></h2>
+            <p>
+              Computer Science Student | Software Development | Information
+              Technology | Web Development
+            </p>
+            <div class="hero-buttons">
+              <a href="#projects" class="hero-btn primary">View My Work</a>
+              <a href="#contact" class="hero-btn secondary">Get In Touch</a>
+            </div>
+          </div>
+          <div class="hero-image">
+            <!-- Test with different approaches -->
+            <img
+              src="me.png"
+              alt="David - Computer Science Student"
+              loading="lazy"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div
+              style="
+                display: none;
+                width: 350px;
+                height: 350px;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                border-radius: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 1.2rem;
+              "
+            >
+              📷 Profile Picture
+            </div>
+          </div>
         </div>
       </div>
     </section>

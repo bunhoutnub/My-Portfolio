@@ -152,3 +152,82 @@ particleStyle.textContent = `
   }
 `;
 document.head.appendChild(particleStyle);
+
+// Contact form functionality
+document.addEventListener("DOMContentLoaded", () => {
+  // Debug image loading
+  const heroImage = document.querySelector(".hero-image img");
+  if (heroImage) {
+    heroImage.addEventListener("error", function () {
+      console.error("Image failed to load:", this.src);
+      this.style.background = "linear-gradient(135deg, #667eea, #764ba2)";
+      this.style.display = "flex";
+      this.style.alignItems = "center";
+      this.style.justifyContent = "center";
+      this.innerHTML =
+        '<div style="color: white; text-align: center; padding: 2rem;">📷<br>Profile Picture<br><small>Image not found</small></div>';
+    });
+
+    heroImage.addEventListener("load", function () {
+      console.log("Image loaded successfully:", this.src);
+    });
+  }
+
+  const form = document.querySelector(".form");
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Get form data
+      const name = form.querySelector('input[type="text"]').value;
+      const email = form.querySelector('input[type="email"]').value;
+      const subject = form.querySelector('input[placeholder="Subject"]').value;
+      const message = form.querySelector("textarea").value;
+
+      // Show loading state
+      const submitBtn = form.querySelector(".form-btn");
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = "Sending...";
+      submitBtn.disabled = true;
+
+      // Simulate sending (in production, this would be a real API call)
+      setTimeout(() => {
+        // Show success state
+        submitBtn.textContent = "✓ Message Sent Successfully!";
+        submitBtn.style.background =
+          "linear-gradient(135deg, #10b981, #059669)";
+
+        // Create success message
+        const successMessage = document.createElement("div");
+        successMessage.style.cssText = `
+          background: linear-gradient(135deg, #10b981, #059669);
+          color: white;
+          padding: 1rem 1.5rem;
+          border-radius: 8px;
+          margin-top: 1rem;
+          text-align: center;
+          animation: slideInUp 0.5s ease;
+        `;
+        successMessage.innerHTML = `
+          <strong>Thank you for your message!</strong><br>
+          I'll get back to you within 24 hours.<br>
+          <small>Your message has been received and I'm excited to connect with you!</small>
+        `;
+
+        form.appendChild(successMessage);
+
+        // Reset form after 3 seconds
+        setTimeout(() => {
+          form.reset();
+          submitBtn.textContent = originalText;
+          submitBtn.style.background = "";
+          submitBtn.disabled = false;
+          successMessage.remove();
+        }, 3000);
+
+        // In a real implementation, you would send this data to your backend
+        console.log("Form data:", { name, email, subject, message });
+      }, 1500); // Simulate network delay
+    });
+  }
+});
