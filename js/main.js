@@ -74,7 +74,36 @@ toggle.addEventListener("change", () => {
   document.body.classList.toggle("dark-mode");
   const isDark = document.body.classList.contains("dark-mode");
   localStorage.setItem("theme", isDark ? "dark" : "light");
+  
+  // Add or remove meteors
+  if (isDark) {
+    createMeteors();
+  } else {
+    removeMeteors();
+  }
 });
+
+// Create meteors for dark mode
+function createMeteors() {
+  // Remove existing meteors first
+  removeMeteors();
+  
+  // Create 4 meteors
+  for (let i = 0; i < 4; i++) {
+    const meteor = document.createElement("div");
+    meteor.className = "meteor";
+    document.body.appendChild(meteor);
+  }
+}
+
+function removeMeteors() {
+  document.querySelectorAll(".meteor").forEach(m => m.remove());
+}
+
+// Initialize meteors if dark mode is already active
+if (document.body.classList.contains("dark-mode")) {
+  createMeteors();
+}
 
 // Add loading animation for project cards
 document.addEventListener("DOMContentLoaded", () => {

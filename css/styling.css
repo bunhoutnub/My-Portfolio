@@ -53,6 +53,154 @@ body.dark-mode {
   --text-secondary: #e2e8f0;
 }
 
+body.dark-mode::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 
+    100px 200px white, 300px 100px white, 500px 300px white, 700px 150px white,
+    900px 400px white, 200px 500px white, 400px 600px white, 600px 700px white,
+    800px 50px white, 150px 350px white, 350px 450px white, 550px 550px white,
+    750px 250px white, 950px 650px white, 250px 150px white, 450px 250px white,
+    650px 350px white, 850px 450px white, 50px 550px white, 1100px 300px white,
+    1200px 500px white, 1300px 200px white, 1400px 600px white, 120px 80px white,
+    320px 180px white, 520px 280px white, 720px 380px white, 920px 480px white,
+    180px 420px white, 380px 520px white, 580px 620px white, 780px 120px white,
+    980px 220px white, 1180px 420px white, 1380px 520px white, 80px 320px white,
+    280px 420px white, 480px 520px white, 680px 620px white, 880px 220px white,
+    1080px 120px white, 1280px 320px white, 60px 460px white, 260px 560px white,
+    460px 160px white, 660px 260px white, 860px 360px white, 1060px 460px white,
+    1260px 560px white, 140px 240px white, 340px 340px white, 540px 440px white;
+  animation: twinkle 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body.dark-mode::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 
+    200px 100px rgba(255, 255, 255, 0.8), 400px 200px rgba(255, 255, 255, 0.8),
+    600px 400px rgba(255, 255, 255, 0.8), 800px 250px rgba(255, 255, 255, 0.8),
+    1000px 500px rgba(255, 255, 255, 0.8), 300px 600px rgba(255, 255, 255, 0.8),
+    500px 700px rgba(255, 255, 255, 0.8), 700px 800px rgba(255, 255, 255, 0.8),
+    900px 150px rgba(255, 255, 255, 0.8), 250px 450px rgba(255, 255, 255, 0.8),
+    450px 550px rgba(255, 255, 255, 0.8), 650px 650px rgba(255, 255, 255, 0.8),
+    850px 350px rgba(255, 255, 255, 0.8), 1050px 750px rgba(255, 255, 255, 0.8),
+    350px 250px rgba(255, 255, 255, 0.8), 550px 350px rgba(255, 255, 255, 0.8),
+    750px 450px rgba(255, 255, 255, 0.8), 950px 550px rgba(255, 255, 255, 0.8),
+    150px 650px rgba(255, 255, 255, 0.8), 1150px 400px rgba(255, 255, 255, 0.8),
+    1250px 600px rgba(255, 255, 255, 0.8), 1350px 300px rgba(255, 255, 255, 0.8),
+    220px 120px rgba(255, 255, 255, 0.8), 420px 220px rgba(255, 255, 255, 0.8),
+    620px 320px rgba(255, 255, 255, 0.8), 820px 420px rgba(255, 255, 255, 0.8),
+    1020px 520px rgba(255, 255, 255, 0.8), 280px 480px rgba(255, 255, 255, 0.8),
+    480px 580px rgba(255, 255, 255, 0.8), 680px 680px rgba(255, 255, 255, 0.8);
+  animation: twinkle 4s ease-in-out infinite reverse;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes meteor {
+  0% {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-500px) translateY(500px);
+    opacity: 0;
+  }
+}
+
+.meteor {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 20px 4px rgba(255, 255, 255, 1);
+  animation: meteor 3s linear infinite;
+  pointer-events: none;
+  z-index: 10000;
+  display: none;
+}
+
+body.dark-mode .meteor {
+  display: block;
+}
+
+.meteor::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1), transparent);
+  transform: translateX(-10px) translateY(-50%);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.meteor:nth-child(1) {
+  top: 10%;
+  right: 10%;
+  animation-delay: 0s;
+}
+
+.meteor:nth-child(2) {
+  top: 20%;
+  right: 80%;
+  animation-delay: 2s;
+  animation-duration: 2.5s;
+}
+
+.meteor:nth-child(3) {
+  top: 5%;
+  right: 50%;
+  animation-delay: 4s;
+  animation-duration: 3.5s;
+}
+
+.meteor:nth-child(4) {
+  top: 30%;
+  right: 20%;
+  animation-delay: 6s;
+  animation-duration: 2.8s;
+}
+
+body.dark-mode > * {
+  position: relative;
+  z-index: 2;
+}
+
+body.dark-mode nav,
+body.dark-mode section {
+  z-index: 2;
+}
+
 body.dark-mode section:nth-child(even) {
   background: linear-gradient(135deg, #1a1a2e, #16213e);
   border: 1px solid rgba(102, 126, 234, 0.1);
@@ -309,38 +457,12 @@ nav a:hover::after {
 }
 
 #hero {
-  background: var(--primary-gradient);
-  color: white;
+  background: transparent;
+  color: var(--text-primary);
   padding: 10rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
-}
-
-#hero::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background:
-    radial-gradient(
-      circle at 20% 80%,
-      rgba(102, 126, 234, 0.3) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(118, 75, 162, 0.3) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 40% 40%,
-      rgba(240, 147, 251, 0.2) 0%,
-      transparent 50%
-    );
-  animation: float 6s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -434,10 +556,11 @@ nav a:hover::after {
   margin-bottom: 1.5rem;
   font-weight: 800;
   letter-spacing: -2px;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 2;
   text-align: left;
+  color: var(--text-primary);
 }
 
 #hero span {
@@ -464,9 +587,9 @@ nav a:hover::after {
 }
 
 .hero-btn.primary {
-  background: white;
-  color: var(--accent);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .hero-btn.primary:hover {
@@ -476,13 +599,13 @@ nav a:hover::after {
 
 .hero-btn.secondary {
   background: transparent;
-  color: white;
-  border: 2px solid white;
+  color: var(--accent);
+  border: 2px solid var(--accent);
 }
 
 .hero-btn.secondary:hover {
-  background: white;
-  color: var(--accent);
+  background: var(--accent);
+  color: white;
   transform: translateY(-2px);
 }
 
@@ -494,6 +617,7 @@ nav a:hover::after {
   margin: 0 auto;
   position: relative;
   z-index: 2;
+  color: var(--text-secondary);
 }
 
 section {
