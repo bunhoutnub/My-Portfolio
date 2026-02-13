@@ -7,9 +7,9 @@
 :root {
   --primary-gradient: linear-gradient(
     135deg,
-    #667eea 0%,
-    #764ba2 50%,
-    #f093fb 100%
+    #0000B8 0%,
+    #7C9ED9 10%,
+    #00009C 100%
   );
   --secondary-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
   --dark-gradient: linear-gradient(
@@ -316,14 +316,7 @@ body.dark-mode footer {
   color: #cbd5e0;
 }
 
-body.dark-mode nav {
-  background: linear-gradient(
-    135deg,
-    rgba(15, 15, 15, 0.95),
-    rgba(26, 26, 46, 0.95)
-  );
-  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
-}
+
 
 body.dark-mode h2 {
   color: #ffffff;
@@ -345,7 +338,7 @@ nav {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  border-bottom: none;
   padding: 1rem 0;
   position: fixed !important;
   top: 0 !important;
@@ -356,45 +349,34 @@ nav {
   height: 80px !important;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  clip-path: url(#wave-clip);
 }
 
-nav h1 {
-  font-size: 1.5rem;
-  color: #ffffff;
-  font-weight: 700;
-}
-
-nav a {
-  color: #ffffff;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  position: relative;
-  padding: 0.5rem 0;
-  font-weight: 600;
-}
-
-nav a::after {
+nav::after {
   content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #ffd700;
-  transition: width 0.3s ease;
+  display: none;
 }
 
-nav a:hover {
-  color: #ffd700;
-}
-
-nav a:hover::after {
-  width: 100%;
+@keyframes wave-float {
+  0% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-12px) translateX(8px);
+  }
+  50% {
+    transform: translateY(-15px) translateX(0px);
+  }
+  75% {
+    transform: translateY(-12px) translateX(-8px);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
 }
 
 body.dark-mode nav {
   background: rgba(15, 15, 15, 0.8);
-  border-bottom: 1px solid rgba(102, 126, 234, 0.3);
   box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
 }
 
@@ -496,14 +478,10 @@ input:checked + .slider:before {
     0 0 20px rgba(255, 215, 0, 0.3);
 }
 
-nav h1 {
+#hero {
   font-size: 1.5rem;
-}
-
-nav ul {
-  display: flex;
-  list-style: none;
-  gap: 2rem;
+  color: #ffffff;
+  font-weight: 700;
 }
 
 nav a {
@@ -513,25 +491,6 @@ nav a {
   position: relative;
   padding: 0.5rem 0;
   font-weight: 600;
-}
-
-nav a::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #ffd700;
-  transition: width 0.3s ease;
-}
-
-nav a:hover {
-  color: #ffd700;
-}
-
-nav a:hover::after {
-  width: 100%;
 }
 
 nav a::after {
@@ -570,16 +529,6 @@ nav a:hover::after {
 
 body.dark-mode #hero {
   min-height: 50vh;
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
 }
 
 @keyframes bubble-rise {
@@ -994,60 +943,6 @@ body.dark-mode .tech-tag {
   background: var(--accent);
   color: white;
   transform: translateY(-2px);
-}
-
-nav ul {
-  display: flex;
-  list-style: none;
-  gap: 2rem;
-}
-
-nav a {
-  color: #ffffff;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  position: relative;
-  padding: 0.5rem 0;
-  font-weight: 600;
-}
-
-nav a::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #ffd700;
-  transition: width 0.3s ease;
-}
-
-nav a:hover {
-  color: #ffd700;
-}
-
-nav a:hover::after {
-  width: 100%;
-}
-
-nav a::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #ffd700;
-  transition: width 0.3s ease;
-}
-
-nav a:hover {
-  color: #ffd700;
-  transform: translateY(-2px);
-}
-
-nav a:hover::after {
-  width: 100%;
 }
 
 .section-subtitle {
@@ -1475,4 +1370,22 @@ footer {
     flex-direction: column;
     align-items: center;
   }
+}
+
+
+.cursor-trail {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  pointer-events: none;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  z-index: 9999;
+  box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.4);
+}
+
+body.dark-mode .cursor-trail {
+  background: rgba(255, 215, 0, 1);
+  box-shadow: 0 0 10px 2px rgba(255, 215, 0, 0.5);
 }

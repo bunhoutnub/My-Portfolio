@@ -78,36 +78,11 @@ toggle.addEventListener("change", () => {
   // Stop and clear particles
   stopParticles();
   
-  // Add or remove meteors
-  if (isDark) {
-    createMeteors();
-  } else {
-    removeMeteors();
+  // Start particles in light mode
+  if (!isDark) {
     startParticles();
   }
 });
-
-// Create meteors for dark mode
-function createMeteors() {
-  // Remove existing meteors first
-  removeMeteors();
-  
-  // Create 4 meteors
-  for (let i = 0; i < 4; i++) {
-    const meteor = document.createElement("div");
-    meteor.className = "meteor";
-    document.body.appendChild(meteor);
-  }
-}
-
-function removeMeteors() {
-  document.querySelectorAll(".meteor").forEach(m => m.remove());
-}
-
-// Initialize meteors if dark mode is already active
-if (document.body.classList.contains("dark-mode")) {
-  createMeteors();
-}
 
 // Add loading animation for project cards
 document.addEventListener("DOMContentLoaded", () => {
@@ -141,11 +116,11 @@ function createParticle() {
     position: fixed;
     pointer-events: none;
     opacity: 0.6;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
+    background: linear-gradient(135deg, rgba(30, 144, 255), rgba(145, 163, 176));
     border-radius: 50%;
     z-index: 1;
     animation: float-particle 10s infinite linear;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(210, 105, 30, 0.5);
   `;
 
   const size = Math.random() * 8 + 4;
@@ -183,7 +158,7 @@ function startParticles() {
     if (!document.body.classList.contains("dark-mode")) {
       createParticle();
     }
-  }, 400);
+  }, 250);
 }
 
 function stopParticles() {
@@ -290,3 +265,47 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+
+// Cursor trail effect - smooth glowing tail
+let cursorTrail = [];
+const maxTrailLength = 20;
+let lastMoveTime = 0;
+
+document.addEventListener('mousemove', (e) => {
+  const now = Date.now();
+  
+  // Create trail more frequently for smooth connection
+  if (now - lastMoveTime < 0) return; // Throttle to every 20ms
+  lastMoveTime = now;
+  
+  const trail = document.createElement('div');
+  trail.className = 'cursor-trail';
+  trail.style.left = e.pageX + 'px';
+  trail.style.top = e.pageY + 'px';
+  trail.style.transform = 'translate(-100%, -100%)';
+  
+  document.body.appendChild(trail);
+  cursorTrail.push(trail);
+  
+  // Remove old trail elements
+  if (cursorTrail.length > maxTrailLength) {
+    const oldTrail = cursorTrail.shift();
+    oldTrail.remove();
+  }
+  
+  // Fade out slowly
+  setTimeout(() => {
+    trail.style.opacity = '0';
+    trail.style.transform = 'translate(-50%, -50%) scale(10)';
+  }, 100);
+  
+  // Remove after animation
+  setTimeout(() => {
+    trail.remove();
+    cursorTrail = cursorTrail.filter(t => t !== trail);
+  }, 700);
+});
+
+lastX = window.innerWidth / 2;
+lastY = window.innerHeight / 2;

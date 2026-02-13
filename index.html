@@ -13,6 +13,18 @@
     />
   </head>
   <body>
+    <svg width="0" height="0" style="position: absolute;">
+      <defs>
+        <clipPath id="wave-clip" clipPathUnits="objectBoundingBox">
+          <path d="M 0,0 L 0,0.8 Q 0.05,1 0.1,0.8 Q 0.15,0.6 0.2,0.8 Q 0.25,1 0.3,0.8 Q 0.35,0.6 0.4,0.8 Q 0.45,1 0.5,0.8 Q 0.55,0.6 0.6,0.8 Q 0.65,1 0.7,0.8 Q 0.75,0.6 0.8,0.8 Q 0.85,1 0.9,0.8 Q 0.95,0.6 1,0.8 L 1,0 Z">
+            <animate attributeName="d" dur="5s" repeatCount="indefinite"
+              values="M 0,0 L 0,0.8 Q 0.05,1 0.1,0.8 Q 0.15,0.6 0.2,0.8 Q 0.25,1 0.3,0.8 Q 0.35,0.6 0.4,0.8 Q 0.45,1 0.5,0.8 Q 0.55,0.6 0.6,0.8 Q 0.65,1 0.7,0.8 Q 0.75,0.6 0.8,0.8 Q 0.85,1 0.9,0.8 Q 0.95,0.6 1,0.8 L 1,0 Z;
+                      M 0,0 L 0,0.8 Q 0.05,0.6 0.1,0.8 Q 0.15,1 0.2,0.8 Q 0.25,0.6 0.3,0.8 Q 0.35,1 0.4,0.8 Q 0.45,0.6 0.5,0.8 Q 0.55,1 0.6,0.8 Q 0.65,0.6 0.7,0.8 Q 0.75,1 0.8,0.8 Q 0.85,0.6 0.9,0.8 Q 0.95,1 1,0.8 L 1,0 Z;
+                      M 0,0 L 0,0.8 Q 0.05,1 0.1,0.8 Q 0.15,0.6 0.2,0.8 Q 0.25,1 0.3,0.8 Q 0.35,0.6 0.4,0.8 Q 0.45,1 0.5,0.8 Q 0.55,0.6 0.6,0.8 Q 0.65,1 0.7,0.8 Q 0.75,0.6 0.8,0.8 Q 0.85,1 0.9,0.8 Q 0.95,0.6 1,0.8 L 1,0 Z" />
+          </path>
+        </clipPath>
+      </defs>
+    </svg>
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
@@ -43,7 +55,7 @@
         <div class="hero-content">
           <div class="hero-image">
             <img
-              src="me.jpg"
+              src="images/me.jpg"
               alt="David - Computer Science Student"
               loading="lazy"
             />
@@ -296,14 +308,18 @@
         <div class="contact-content">
           <div class="contact-info">
             <div class="contact-item">
-              <div class="contact-icon">📧</div>
+              <div class="contact-icon">
+                <img src="images/email.png" alt="Email" style="width: 40px; height: 40px;">
+              </div>
               <div class="contact-details">
                 <h4>Email</h4>
                 <a href="mailto:nubbunhout@gmail.com">nubbunhout@gmail.com</a>
               </div>
             </div>
             <div class="contact-item">
-              <div class="contact-icon">💼</div>
+              <div class="contact-icon">
+                <img src="images/linkedin.png" alt="LinkedIn" style="width: 40px; height: 40px;">
+              </div>
               <div class="contact-details">
                 <h4>LinkedIn</h4>
                 <a href="https://www.linkedin.com/in/bunhoutnub" target="_blank"
@@ -312,19 +328,14 @@
               </div>
             </div>
             <div class="contact-item">
-              <div class="contact-icon">🐙</div>
+              <div class="contact-icon">
+                <img src="images/GitHub_Invertocat_Black.png" alt="GitHub" style="width: 40px; height: 40px; filter: brightness(0) invert(1);">
+              </div>
               <div class="contact-details">
                 <h4>GitHub</h4>
                 <a href="https://github.com/bunhoutnub" target="_blank"
                   >github.com/bunhoutnub</a
                 >
-              </div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">🌐</div>
-              <div class="contact-details">
-                <h4>Portfolio</h4>
-                <a href="#">www.davidportfolio.com</a>
               </div>
             </div>
           </div>
