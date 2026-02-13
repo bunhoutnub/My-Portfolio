@@ -75,11 +75,15 @@ toggle.addEventListener("change", () => {
   const isDark = document.body.classList.contains("dark-mode");
   localStorage.setItem("theme", isDark ? "dark" : "light");
   
+  // Stop and clear particles
+  stopParticles();
+  
   // Add or remove meteors
   if (isDark) {
     createMeteors();
   } else {
     removeMeteors();
+    startParticles();
   }
 });
 
@@ -136,14 +140,15 @@ function createParticle() {
   particle.style.cssText = `
     position: fixed;
     pointer-events: none;
-    opacity: 0.3;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    opacity: 0.6;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
     border-radius: 50%;
     z-index: 1;
     animation: float-particle 10s infinite linear;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   `;
 
-  const size = Math.random() * 4 + 2;
+  const size = Math.random() * 8 + 4;
   particle.style.width = size + "px";
   particle.style.height = size + "px";
   particle.style.left = Math.random() * window.innerWidth + "px";
@@ -156,7 +161,7 @@ function createParticle() {
 
   particle.animate(
     [
-      { transform: "translateY(0) translateX(0)", opacity: 0.3 },
+      { transform: "translateY(0) translateX(0)", opacity: 0.6 },
       {
         transform: `translateY(-${window.innerHeight + 100}px) translateX(${horizontalMovement}px)`,
         opacity: 0,
@@ -169,8 +174,33 @@ function createParticle() {
   ).onfinish = () => particle.remove();
 }
 
-// Create particles periodically
-setInterval(createParticle, 800);
+// Create particles periodically - only in light mode
+let particleInterval;
+
+function startParticles() {
+  if (particleInterval) clearInterval(particleInterval);
+  particleInterval = setInterval(() => {
+    if (!document.body.classList.contains("dark-mode")) {
+      createParticle();
+    }
+  }, 400);
+}
+
+function stopParticles() {
+  if (particleInterval) {
+    clearInterval(particleInterval);
+    particleInterval = null;
+  }
+  // Remove all particles
+  document.querySelectorAll('div').forEach(el => {
+    const style = el.getAttribute('style');
+    if (style && style.includes('position: fixed') && style.includes('pointer-events: none')) {
+      el.remove();
+    }
+  });
+}
+
+startParticles();
 
 // Add floating particle animation
 const particleStyle = document.createElement("style");
