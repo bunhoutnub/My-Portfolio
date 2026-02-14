@@ -56,7 +56,7 @@ body {
     sans-serif;
   line-height: 1.6;
   color: var(--text-primary);
-  background: linear-gradient(135deg, #ED9121 0%, #1C39BB 30%, #000E24 70%);
+  background: linear-gradient(135deg, #ED9121 0%, #1C39BB 25%, #000E24 70%);
   min-height: 100vh;
   overflow-x: hidden;
   scrollbar-width: none; /* Firefox */

@@ -249,7 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.disabled = true;
 
       // Send email using EmailJS
-      emailjs.sendForm('service_rtd2fxp', 'template_xjlra8o', this)
+      emailjs.sendForm('service_daupev6', 'template_xjlra8o', this)
         .then(function() {
           // Show success state
           submitBtn.textContent = "✓ Message Sent Successfully!";
