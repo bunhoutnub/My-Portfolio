@@ -13,67 +13,89 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: #2c3e50;
-            font-family: Courier, monospace;
+            background: linear-gradient(135deg, #ED9121 0%, #1C39BB 30%, #000E24 70%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .game-container {
             text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         h1 {
             color: white;
             margin-bottom: 10px;
+            font-size: 48px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
         #score {
             color: white;
-            font-size: 24px;
-            font-family: Courier, monospace;
+            font-size: 28px;
+            font-weight: bold;
             margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
         canvas {
-            background-color: grey;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             display: block;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border: 3px solid rgba(255, 255, 255, 0.2);
         }
         #gameOver {
-            color: white;
-            font-size: 24px;
-            font-family: Courier, monospace;
+            color: #ff6b6b;
+            font-size: 32px;
+            font-weight: bold;
             margin-top: 20px;
             display: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
         #restartBtn {
             margin-top: 10px;
-            padding: 10px 20px;
-            background: #27ae60;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
             font-weight: bold;
-            font-family: Courier, monospace;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
             display: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
         }
         #restartBtn:hover {
-            background: #2ecc71;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
         .controls {
             color: white;
             margin-top: 20px;
-            font-size: 14px;
+            font-size: 16px;
+            opacity: 0.9;
         }
         .back-btn {
             margin-top: 20px;
-            padding: 10px 20px;
+            padding: 12px 30px;
             background: white;
-            color: #2c3e50;
+            color: #667eea;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 25px;
             font-weight: bold;
             display: inline-block;
-            font-family: Courier, monospace;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
         }
         .back-btn:hover {
-            background: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
@@ -104,6 +126,8 @@
         let dy = 0;
         let score = 0;
         let gameRunning = true;
+        let directionQueue = [];
+        let lastDirection = {dx: GRID_SIZE, dy: 0};
 
         function randomFood() {
             food.x = Math.floor(Math.random() * (CANVAS_SIZE / GRID_SIZE)) * GRID_SIZE;
@@ -111,20 +135,64 @@
         }
 
         function drawSnake() {
-            snake.forEach((segment) => {
-                ctx.fillStyle = 'black';
-                ctx.fillRect(segment.x, segment.y, GRID_SIZE, GRID_SIZE);
+            snake.forEach((segment, index) => {
+                // Gradient for snake body
+                const gradient = ctx.createLinearGradient(segment.x, segment.y, segment.x + GRID_SIZE, segment.y + GRID_SIZE);
+                if (index === 0) {
+                    // Head - brighter green
+                    gradient.addColorStop(0, '#4ecdc4');
+                    gradient.addColorStop(1, '#44a08d');
+                } else {
+                    // Body - darker green
+                    gradient.addColorStop(0, '#3ab09e');
+                    gradient.addColorStop(1, '#2d8b75');
+                }
+                
+                ctx.fillStyle = gradient;
+                ctx.fillRect(segment.x + 1, segment.y + 1, GRID_SIZE - 2, GRID_SIZE - 2);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(segment.x + 1, segment.y + 1, GRID_SIZE - 2, GRID_SIZE - 2);
+                
+                // Add eyes to head
+                if (index === 0) {
+                    ctx.fillStyle = 'white';
+                    ctx.beginPath();
+                    ctx.arc(segment.x + 7, segment.y + 7, 2, 0, Math.PI * 2);
+                    ctx.arc(segment.x + 13, segment.y + 7, 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             });
         }
 
         function drawFood() {
-            ctx.fillStyle = 'red';
+            // Glowing food effect
+            const gradient = ctx.createRadialGradient(food.x + GRID_SIZE/2, food.y + GRID_SIZE/2, 0, food.x + GRID_SIZE/2, food.y + GRID_SIZE/2, GRID_SIZE/2);
+            gradient.addColorStop(0, '#ff6b6b');
+            gradient.addColorStop(0.7, '#ee5a6f');
+            gradient.addColorStop(1, 'rgba(238, 90, 111, 0.5)');
+            
+            ctx.fillStyle = gradient;
             ctx.beginPath();
             ctx.arc(food.x + GRID_SIZE/2, food.y + GRID_SIZE/2, GRID_SIZE/2 * 0.8, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Add shine effect
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.beginPath();
+            ctx.arc(food.x + GRID_SIZE/2 - 3, food.y + GRID_SIZE/2 - 3, 3, 0, Math.PI * 2);
             ctx.fill();
         }
 
         function moveSnake() {
+            // Process direction queue
+            if (directionQueue.length > 0) {
+                const newDir = directionQueue.shift();
+                dx = newDir.dx;
+                dy = newDir.dy;
+                lastDirection = {dx, dy};
+            }
+            
             const head = {x: snake[0].x + dx, y: snake[0].y + dy};
             snake.unshift(head);
 
@@ -179,19 +247,35 @@
             
             if (!gameRunning) return;
             
+            let newDir = null;
+            
             switch(e.key) {
                 case 'ArrowUp':
-                    if (dy === 0) { dx = 0; dy = -GRID_SIZE; }
+                    if (lastDirection.dy === 0) { 
+                        newDir = {dx: 0, dy: -GRID_SIZE};
+                    }
                     break;
                 case 'ArrowDown':
-                    if (dy === 0) { dx = 0; dy = GRID_SIZE; }
+                    if (lastDirection.dy === 0) { 
+                        newDir = {dx: 0, dy: GRID_SIZE};
+                    }
                     break;
                 case 'ArrowLeft':
-                    if (dx === 0) { dx = -GRID_SIZE; dy = 0; }
+                    if (lastDirection.dx === 0) { 
+                        newDir = {dx: -GRID_SIZE, dy: 0};
+                    }
                     break;
                 case 'ArrowRight':
-                    if (dx === 0) { dx = GRID_SIZE; dy = 0; }
+                    if (lastDirection.dx === 0) { 
+                        newDir = {dx: GRID_SIZE, dy: 0};
+                    }
                     break;
+            }
+            
+            // Only add to queue if it's a valid direction and queue is not too long
+            if (newDir && directionQueue.length < 2) {
+                directionQueue.push(newDir);
+                lastDirection = newDir;
             }
         });
 
@@ -201,6 +285,8 @@
             dy = 0;
             score = 0;
             gameRunning = true;
+            directionQueue = [];
+            lastDirection = {dx: GRID_SIZE, dy: 0};
             scoreElement.textContent = 'Score: 0';
             gameOverElement.style.display = 'none';
             restartBtn.style.display = 'none';

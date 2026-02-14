@@ -447,7 +447,7 @@ nav li {
 }
 
 .slider:after {
-  content: "☀️";
+  content: "💧";
   position: absolute;
   right: 12px;
   top: 50%;
@@ -722,6 +722,16 @@ body.dark-mode .bubble {
     rgba(0, 0, 0, 0.4) 70%,
     rgba(0, 0, 0, 0) 80%
   );
+  animation: float-profile 3s ease-in-out infinite;
+}
+
+@keyframes float-profile {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 .hero-image img::before {

@@ -334,3 +334,24 @@ document.addEventListener('mousemove', (e) => {
 
 lastX = window.innerWidth / 2;
 lastY = window.innerHeight / 2;
+
+
+// Save scroll position when clicking project links
+document.querySelectorAll('.project-link.primary').forEach(link => {
+  link.addEventListener('click', () => {
+    sessionStorage.setItem('returnToProjects', 'true');
+  });
+});
+
+// Restore scroll position to projects section on page load
+window.addEventListener('load', () => {
+  if (sessionStorage.getItem('returnToProjects') === 'true') {
+    sessionStorage.removeItem('returnToProjects');
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      setTimeout(() => {
+        projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }
+});
