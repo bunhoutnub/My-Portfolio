@@ -833,6 +833,10 @@ section {
   position: relative;
 }
 
+section#about {
+  margin-top: 8rem;
+}
+
 section:nth-child(even) {
   background: transparent;
 }
