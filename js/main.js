@@ -212,6 +212,11 @@ particleStyle.textContent = `
 `;
 document.head.appendChild(particleStyle);
 
+// Initialize EmailJS
+(function() {
+  emailjs.init("MefC9bLsyANdCYQz4");
+})();
+
 // Contact form functionality
 document.addEventListener("DOMContentLoaded", () => {
   // Debug image loading
@@ -232,16 +237,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const form = document.querySelector(".form");
+  const form = document.getElementById("contact-form");
   if (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-
-      // Get form data
-      const name = form.querySelector('input[type="text"]').value;
-      const email = form.querySelector('input[type="email"]').value;
-      const subject = form.querySelector('input[placeholder="Subject"]').value;
-      const message = form.querySelector("textarea").value;
 
       // Show loading state
       const submitBtn = form.querySelector(".form-btn");
@@ -249,44 +248,73 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.textContent = "Sending...";
       submitBtn.disabled = true;
 
-      // Simulate sending (in production, this would be a real API call)
-      setTimeout(() => {
-        // Show success state
-        submitBtn.textContent = "✓ Message Sent Successfully!";
-        submitBtn.style.background =
-          "linear-gradient(135deg, #10b981, #059669)";
+      // Send email using EmailJS
+      emailjs.sendForm('service_rtd2fxp', 'template_xjlra8o', this)
+        .then(function() {
+          // Show success state
+          submitBtn.textContent = "✓ Message Sent Successfully!";
+          submitBtn.style.background = "linear-gradient(135deg, #10b981, #059669)";
 
-        // Create success message
-        const successMessage = document.createElement("div");
-        successMessage.style.cssText = `
-          background: linear-gradient(135deg, #10b981, #059669);
-          color: white;
-          padding: 1rem 1.5rem;
-          border-radius: 8px;
-          margin-top: 1rem;
-          text-align: center;
-          animation: slideInUp 0.5s ease;
-        `;
-        successMessage.innerHTML = `
-          <strong>Thank you for your message!</strong><br>
-          I'll get back to you within 24 hours.<br>
-          <small>Your message has been received and I'm excited to connect with you!</small>
-        `;
+          // Create success message
+          const successMessage = document.createElement("div");
+          successMessage.style.cssText = `
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+            animation: slideInUp 0.5s ease;
+          `;
+          successMessage.innerHTML = `
+            <strong>Thank you for your message!</strong><br>
+            I'll get back to you within 24 hours.<br>
+            <small>Your message has been received and I'm excited to connect with you!</small>
+          `;
 
-        form.appendChild(successMessage);
+          form.appendChild(successMessage);
 
-        // Reset form after 3 seconds
-        setTimeout(() => {
-          form.reset();
-          submitBtn.textContent = originalText;
-          submitBtn.style.background = "";
-          submitBtn.disabled = false;
-          successMessage.remove();
-        }, 3000);
-
-        // In a real implementation, you would send this data to your backend
-        console.log("Form data:", { name, email, subject, message });
-      }, 1500); // Simulate network delay
+          // Reset form after 3 seconds
+          setTimeout(() => {
+            form.reset();
+            submitBtn.textContent = originalText;
+            submitBtn.style.background = "";
+            submitBtn.disabled = false;
+            successMessage.remove();
+          }, 3000);
+        }, function(error) {
+          // Show error state
+          submitBtn.textContent = "✗ Failed to Send";
+          submitBtn.style.background = "linear-gradient(135deg, #ef4444, #dc2626)";
+          
+          // Create error message
+          const errorMessage = document.createElement("div");
+          errorMessage.style.cssText = `
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+            animation: slideInUp 0.5s ease;
+          `;
+          errorMessage.innerHTML = `
+            <strong>Oops! Something went wrong.</strong><br>
+            Please try again or email me directly at nubbunhout@gmail.com
+          `;
+          
+          form.appendChild(errorMessage);
+          
+          // Reset button after 3 seconds
+          setTimeout(() => {
+            submitBtn.textContent = originalText;
+            submitBtn.style.background = "";
+            submitBtn.disabled = false;
+            errorMessage.remove();
+          }, 3000);
+          
+          console.error('EmailJS error:', error);
+        });
     });
   }
 });

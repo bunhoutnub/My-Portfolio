@@ -341,18 +341,19 @@
           </div>
           <div class="contact-form">
             <h3>Send Me a Message</h3>
-            <form class="form">
+            <form class="form" id="contact-form">
               <div class="form-group">
-                <input type="text" placeholder="Your Name" required />
+                <input type="text" name="from_name" placeholder="Your Name" required />
               </div>
               <div class="form-group">
-                <input type="email" placeholder="Your Email" required />
+                <input type="email" name="from_email" placeholder="Your Email" required />
               </div>
               <div class="form-group">
-                <input type="text" placeholder="Subject" required />
+                <input type="text" name="subject" placeholder="Subject" required />
               </div>
               <div class="form-group">
                 <textarea
+                  name="message"
                   placeholder="Your Message"
                   rows="5"
                   required
@@ -365,6 +366,7 @@
       </div>
     </section>
 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
