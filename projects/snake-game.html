@@ -103,6 +103,7 @@
     <div class="game-container">
         <h1>Snake Game</h1>
         <div id="score">Score: 0</div>
+        <div id="highScore" style="color: #ffd700; font-size: 20px; font-weight: bold; margin-bottom: 15px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);">Highest Score: 0</div>
         <canvas id="gameCanvas" width="600" height="600"></canvas>
         <div id="gameOver">GAME OVER!</div>
         <button id="restartBtn">Play Again</button>
@@ -114,6 +115,7 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const scoreElement = document.getElementById('score');
+        const highScoreElement = document.getElementById('highScore');
         const gameOverElement = document.getElementById('gameOver');
         const restartBtn = document.getElementById('restartBtn');
 
@@ -122,12 +124,18 @@
         
         let snake = [{x: 300, y: 300}, {x: 280, y: 300}, {x: 260, y: 300}];
         let food = {x: 0, y: 0};
+        let bonusApple = null; // Big bonus apple
+        let bonusAppleTimer = null;
         let dx = GRID_SIZE;
         let dy = 0;
         let score = 0;
+        let highScore = localStorage.getItem('snakeHighScore') || 0;
         let gameRunning = true;
         let directionQueue = [];
         let lastDirection = {dx: GRID_SIZE, dy: 0};
+        
+        // Display high score on load
+        highScoreElement.textContent = `Highest Score: ${highScore}`;
 
         function randomFood() {
             food.x = Math.floor(Math.random() * (CANVAS_SIZE / GRID_SIZE)) * GRID_SIZE;
@@ -184,6 +192,56 @@
             ctx.fill();
         }
 
+        function drawBonusApple() {
+            if (!bonusApple) return;
+            
+            const size = GRID_SIZE * 2; // Double size
+            const centerX = bonusApple.x + size/2;
+            const centerY = bonusApple.y + size/2;
+            
+            // Glowing golden apple effect
+            const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, size/2);
+            gradient.addColorStop(0, '#ffd700');
+            gradient.addColorStop(0.5, '#ffaa00');
+            gradient.addColorStop(1, 'rgba(255, 170, 0, 0.3)');
+            
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, size/2 * 0.9, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Add shine effect
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.beginPath();
+            ctx.arc(centerX - 8, centerY - 8, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Add sparkle
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText('★', centerX + 15, centerY - 10);
+        }
+
+        function spawnBonusApple() {
+            if (bonusApple || !gameRunning) return;
+            
+            // Random chance to spawn (20% every 5 seconds)
+            if (Math.random() < 0.2) {
+                bonusApple = {
+                    x: Math.floor(Math.random() * ((CANVAS_SIZE - GRID_SIZE * 2) / GRID_SIZE)) * GRID_SIZE,
+                    y: Math.floor(Math.random() * ((CANVAS_SIZE - GRID_SIZE * 2) / GRID_SIZE)) * GRID_SIZE
+                };
+                
+                // Disappear after 3 seconds
+                bonusAppleTimer = setTimeout(() => {
+                    bonusApple = null;
+                }, 3000);
+            }
+        }
+
+        // Try to spawn bonus apple every 5 seconds
+        setInterval(spawnBonusApple, 5000);
+
         function moveSnake() {
             // Process direction queue
             if (directionQueue.length > 0) {
@@ -196,11 +254,26 @@
             const head = {x: snake[0].x + dx, y: snake[0].y + dy};
             snake.unshift(head);
 
+            // Check regular food collision
             if (head.x === food.x && head.y === food.y) {
                 score++;
                 scoreElement.textContent = `Score: ${score}`;
                 randomFood();
-            } else {
+            } 
+            // Check bonus apple collision (2x2 grid)
+            else if (bonusApple && 
+                     head.x >= bonusApple.x && head.x < bonusApple.x + GRID_SIZE * 2 &&
+                     head.y >= bonusApple.y && head.y < bonusApple.y + GRID_SIZE * 2) {
+                score += 5; // Bonus points!
+                scoreElement.textContent = `Score: ${score}`;
+                // Triple the snake size
+                for (let i = 0; i < 3; i++) {
+                    snake.push({...snake[snake.length - 1]});
+                }
+                clearTimeout(bonusAppleTimer);
+                bonusApple = null;
+            } 
+            else {
                 snake.pop();
             }
         }
@@ -229,12 +302,24 @@
             
             if (checkCollision()) {
                 gameRunning = false;
+                
+                // Update high score if current score is higher
+                if (score > highScore) {
+                    highScore = score;
+                    localStorage.setItem('snakeHighScore', highScore);
+                    highScoreElement.textContent = `Highest Score: ${highScore}`;
+                    gameOverElement.textContent = 'NEW HIGHEST SCORE! 🎉';
+                } else {
+                    gameOverElement.textContent = 'GAME OVER!';
+                }
+                
                 gameOverElement.style.display = 'block';
                 restartBtn.style.display = 'inline-block';
                 return;
             }
 
             drawFood();
+            drawBonusApple();
             drawSnake();
 
             setTimeout(gameLoop, 100);
@@ -287,6 +372,8 @@
             gameRunning = true;
             directionQueue = [];
             lastDirection = {dx: GRID_SIZE, dy: 0};
+            bonusApple = null;
+            if (bonusAppleTimer) clearTimeout(bonusAppleTimer);
             scoreElement.textContent = 'Score: 0';
             gameOverElement.style.display = 'none';
             restartBtn.style.display = 'none';
