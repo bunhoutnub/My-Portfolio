@@ -4,6 +4,23 @@
   box-sizing: border-box;
 }
 
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  background: linear-gradient(135deg, #ED9121 0%, #1C39BB 30%, #000E24 70%);
+  background-attachment: fixed;
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+body.dark-mode ~ html,
+html:has(body.dark-mode) {
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
+  background-attachment: fixed;
+}
+
 :root {
   --primary-gradient: linear-gradient(
     135deg,
@@ -22,8 +39,8 @@
   --glass-border: rgba(255, 255, 255, 0.25);
   --text-primary: #ffffff;
   --text-secondary: #f0f0f0;
-  --accent: #ffd700;
-  --accent-hover: #ffed4e;
+  --accent: #9683EC;
+  --accent-hover: #6A5ACD;
 }
 
 body {
@@ -42,6 +59,12 @@ body {
   background: linear-gradient(135deg, #ED9121 0%, #1C39BB 30%, #000E24 70%);
   min-height: 100vh;
   overflow-x: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 body.dark-mode {
@@ -249,7 +272,6 @@ body.dark-mode .project-card:hover {
 }
 
 body.dark-mode footer {
-  background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
   color: white;
   padding: 3rem 0 1rem;
   margin-top: 4rem;
@@ -335,7 +357,7 @@ body.dark-mode h2::after {
 }
 
 nav {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 185, 232, .20);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: none;
@@ -401,13 +423,6 @@ nav ul {
 
 nav li {
   margin: 0;
-}
-
-.theme-switch {
-  position: relative;
-  display: inline-block;
-  width: 120px;
-  height: 40px;
 }
 
 .theme-switch input {
@@ -478,10 +493,11 @@ input:checked + .slider:before {
     0 0 20px rgba(255, 215, 0, 0.3);
 }
 
-#hero {
+nav h1 {
   font-size: 1.5rem;
-  color: #ffffff;
+  color: #E6E6FA;
   font-weight: 700;
+  animation: float-item 3s ease-in-out infinite;
 }
 
 nav a {
@@ -491,6 +507,45 @@ nav a {
   position: relative;
   padding: 0.5rem 0;
   font-weight: 600;
+  animation: float-item 2s ease-in-out infinite;
+}
+
+nav li:nth-child(1) a {
+  animation-delay: 0.1s;
+}
+
+nav li:nth-child(2) a {
+  animation-delay: 0.2s;
+}
+
+nav li:nth-child(3) a {
+  animation-delay: 0.3s;
+}
+
+nav li:nth-child(4) a {
+  animation-delay: 0.4s;
+}
+
+nav li:nth-child(5) a {
+  animation-delay: 0.5s;
+}
+
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 120px;
+  height: 40px;
+  animation: float-item 2s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+
+@keyframes float-item {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 nav a::after {
@@ -500,12 +555,12 @@ nav a::after {
   left: 0;
   width: 0;
   height: 2px;
-  background: #ffd700;
+  background: #00CCFF;
   transition: width 0.3s ease;
 }
 
 nav a:hover {
-  color: #ffd700;
+  color: #00CCFF;
   transform: translateY(-2px);
 }
 
@@ -601,7 +656,7 @@ body.dark-mode .bubble {
   width: 18px;
   height: 18px;
   left: 85%;
-  animation: bubble-rise 11s infinite 5s;
+  animation: bubble-rise 11s infinite d;
 }
 
 .bubble:nth-child(7) {
@@ -717,7 +772,7 @@ body.dark-mode .bubble {
 }
 
 #hero span {
-  color: #ffd700;
+  color: #00CCFF;
 }
 
 .hero-buttons {
@@ -1111,7 +1166,7 @@ body.dark-mode .skill-category h3 {
     rgba(255, 255, 255, 0.2),
     transparent
   );
-  transition: left 0.5s;
+  transition: left 0.d;
 }
 
 .resume-btn:hover {
@@ -1247,10 +1302,15 @@ body.dark-mode .skill-category h3 {
 }
 
 footer {
-  background: #2c3e50;
+  background: transparent;
   color: white;
   text-align: center;
   padding: 2rem 0;
+}
+
+body.dark-mode footer {
+  background: transparent;
+  color: white;
 }
 
 .fade-out {
@@ -1375,14 +1435,13 @@ footer {
 
 .cursor-trail {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  width: 5px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, .5);
   pointer-events: none;
   transition: opacity 0.6s ease, transform 0.6s ease;
   z-index: 9999;
-  box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 8px 2px rgba(135, 211, 248, .45);
 }
 
 body.dark-mode .cursor-trail {

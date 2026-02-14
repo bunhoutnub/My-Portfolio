@@ -78,11 +78,36 @@ toggle.addEventListener("change", () => {
   // Stop and clear particles
   stopParticles();
   
-  // Start particles in light mode
-  if (!isDark) {
+  // Add or remove meteors
+  if (isDark) {
+    createMeteors();
+  } else {
+    removeMeteors();
     startParticles();
   }
 });
+
+// Create meteors for dark mode
+function createMeteors() {
+  // Remove existing meteors first
+  removeMeteors();
+  
+  // Create 4 meteors
+  for (let i = 0; i < 4; i++) {
+    const meteor = document.createElement("div");
+    meteor.className = "meteor";
+    document.body.appendChild(meteor);
+  }
+}
+
+function removeMeteors() {
+  document.querySelectorAll(".meteor").forEach(m => m.remove());
+}
+
+// Initialize meteors if dark mode is already active
+if (document.body.classList.contains("dark-mode")) {
+  createMeteors();
+}
 
 // Add loading animation for project cards
 document.addEventListener("DOMContentLoaded", () => {
@@ -116,7 +141,7 @@ function createParticle() {
     position: fixed;
     pointer-events: none;
     opacity: 0.6;
-    background: linear-gradient(135deg, rgba(30, 144, 255), rgba(145, 163, 176));
+    background: linear-gradient(135deg, rgba(30, 144, 255), rgba(245, 245, 245));
     border-radius: 50%;
     z-index: 1;
     animation: float-particle 10s infinite linear;
