@@ -61,55 +61,7 @@ document.querySelectorAll("section").forEach((section) => {
   observer.observe(section);
 });
 
-// Dark mode toggle with enhanced transition
-const toggle = document.getElementById("themeToggle");
-const savedTheme = localStorage.getItem("theme");
-
-if (savedTheme === "dark") {
-  document.body.classList.add("dark-mode");
-  toggle.checked = true;
-}
-
-toggle.addEventListener("change", () => {
-  document.body.classList.toggle("dark-mode");
-  const isDark = document.body.classList.contains("dark-mode");
-  localStorage.setItem("theme", isDark ? "dark" : "light");
-  
-  // Stop and clear particles
-  stopParticles();
-  
-  // Add or remove meteors
-  if (isDark) {
-    createMeteors();
-  } else {
-    removeMeteors();
-    startParticles();
-  }
-});
-
-// Create meteors for dark mode
-function createMeteors() {
-  // Remove existing meteors first
-  removeMeteors();
-  
-  // Create 4 meteors
-  for (let i = 0; i < 4; i++) {
-    const meteor = document.createElement("div");
-    meteor.className = "meteor";
-    document.body.appendChild(meteor);
-  }
-}
-
-function removeMeteors() {
-  document.querySelectorAll(".meteor").forEach(m => m.remove());
-}
-
-// Initialize meteors if dark mode is already active
-if (document.body.classList.contains("dark-mode")) {
-  createMeteors();
-}
-
-// Add loading animation for project cards
+// Smooth scrolling for navigation links
 document.addEventListener("DOMContentLoaded", () => {
   const projectCards = document.querySelectorAll(".project-card");
   projectCards.forEach((card, index) => {
